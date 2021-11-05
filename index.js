@@ -12,6 +12,7 @@ document.getElementById("Aanmaakknop").addEventListener("click", ()=>{
     let L = document.getElementById("L").value;
     let B = document.getElementById("B").value;
     let H = document.getElementById("H").value;
+    let kleur = document.getElementById("kleur").value;
     let vwpNaam = document.getElementById("naam").value;
 
     //Check for empty inputs
@@ -20,10 +21,17 @@ document.getElementById("Aanmaakknop").addEventListener("click", ()=>{
     if( H == ""){ console.log("Vul de hoogte in van je voorwerp!"); }
     if( vwpNaam == ""){ console.log("Vul een naam in voor het voorwerp!")}
 
+    //Formate colourhex to RGB
+    let rk = (parseInt(kleur.substr(1,2), 16))/255;
+    let gk = (parseInt(kleur.substr(3,2), 16))/255;
+    let bk = (parseInt(kleur.substr(5,2), 16))/255;
+
     //Push usermade voorwerp in objects
-    if( L != "" && B != "" && H != "" && vwpNaam != ""){ objects.push([vwpNaam, L, B, H]); }
+    if( L != "" && B != "" && H != "" && vwpNaam != ""){ objects.push([vwpNaam, L, B, H, rk, gk, bk]); }
     
     console.table(objects);
+
+    makeBoxes();
 });
 
 //Vars
@@ -89,10 +97,36 @@ function init(){
     animate();
 }
 
+//Make userboxes
 function makeBoxes(){
-    //Create boxes with input from the objects-array
-    for(let i=0; i < objects.length; i++){
-        console.log("CONTENT!");
+    //Loop the array to create all boxes
+    for(let i = 0; i < objects.length; i++){            
+        
+        var geometry = new THREE.BoxGeometry(objects[i][1], objects[i][2], objects[i][3]);
+        var colorbox = new THREE.Color(objects[i][4], objects[i][5], objects[i][6]);
+        var material = new THREE.MeshBasicMaterial({color: colorbox});
+
+        switch(i){
+            case 0:
+                const cube0 = new THREE.Mesh(geometry, material);
+                scene.add(cube0);
+                break;
+            case 1:
+                const cube1 = new THREE.Mesh(geometry, material);
+                scene.add(cube1);
+                break;
+            case 2:
+                const cube2 = new THREE.Mesh(geometry, material);
+                scene.add(cube2);
+                break;    
+        }
+        
+
+        // var objectAmount = objects[i].length;
+        // for(let j = 0; j < objectAmount; j++){
+        //     console.log('[' + i + ',' + j + '] = ' + objects[i][j]);
+            
+        // }
     }
 }
 
