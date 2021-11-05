@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-            <div class="justify-start p-8 bg-gray-800 md:w-4/12 rounded-lg float-left">
+            <div class="justify-start mt-8  ml-8 p-8 bg-gray-800 md:w-4/12 rounded-lg float-left">
                 <h1 class="text-gray-400 font-bold text-5xl p-8">Fjällbo</h1>
                 <p class="text-gray-400"> Een handige stellingkast als je thuis een rustieke uitstraling wilt creëren. Het metaal geeft een industrieel gevoel en het massieve hout zorgt ervoor dat ieder meubelstuk uniek is. </p>
                 <h1 class="text-gray-400 font-bold text-2xl p-8">&euro;49,95 incl. btw</h1>
@@ -18,18 +18,19 @@
                 <button class="my-2 box-border p-4 h-16 w-32 borer-4 border-gray-400 bg-yellow-500 font-bold rounded-lg">Kast kopen</button>
             </div>
 
-            <div class="justify-end p-8 bg-gray-200 md:w-4/12 right-0 fixed rounded-lg">
+            <div class="justify-end p-8 ml-8 bg-gray-200 md:w-4/12 right-0 fixed rounded-lg h-full">
                 <h1 class="text-gray-800 font-bold text-4xl p-8">Kastpasser</h1>
                 <p class="text-gray-800 p-2"> 
                     Wil je kijken of een specifiek voorwerp in de kast past? Meet het voorwerp op en geeft de afmetingen door in cm!
                 </p>
-                <form class="p-1 my-2"action="">
-                    <input class=" my-2 w-10 p-1" placeholder="L"> x <input class="w-10 p-1"  placeholder="B"> x <input class="w-10 p-1" placeholder="H"><br>
-                    <input class="my-2 w-auto p-1" placeholder="Naam voorwerp"><br>
-                    <button class="my-2 box-border p-4 h-16 w-32 borer-4 border-gray-400 bg-yellow-500 font-bold rounded-lg">Maak aan</button>
+                <p class="hidden">Controleer of u uw velden goed heeft ingevuld!</p>
+                <form class="pl-8 p-1 my-2" action="">
+                    <input type="number" min="0" class=" my-2 w-10 p-1" placeholder="L" id="L"> x <input type="number" min="0" class="w-10 p-1" placeholder="B" id="B"> x <input type="number" min="0" class="w-10 p-1" placeholder="H" id="H"><br>
+                    <input class="my-2 w-auto p-1" placeholder="Naam voorwerp" id="naam"><br>
+                    <div id="Aanmaakknop" class="my-2 box-border h-16 w-32 bg-yellow-500 font-bold rounded-lg flex items-center justify-center cursor-pointer"><p class="m-auto">Aanmaken</p></div>
                 </form>
 
-                <h1 class="text-gray-800 font-bold text-4xl p-8">Al aangemaakt voorwerpen </h1>
+                <h1 class="text-gray-800 font-bold text-4xl">Al aangemaakt voorwerpen </h1>
 
                 
             </div>

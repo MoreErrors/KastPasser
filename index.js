@@ -3,6 +3,29 @@ import { OrbitControls } from './ThreeJS/examples/jsm/controls/OrbitControls.js'
 import * as dat from './ThreeJS/examples/jsm/libs/dat.gui.module.js';
 import { GLTFLoader } from './ThreeJS/examples/jsm/loaders/GLTFLoader.js';
 
+//Create Object Form handling
+const objects = new Array(); //All objects stored in array
+
+document.getElementById("Aanmaakknop").addEventListener("click", ()=>{
+
+    //Fetch value from the form
+    let L = document.getElementById("L").value;
+    let B = document.getElementById("B").value;
+    let H = document.getElementById("H").value;
+    let vwpNaam = document.getElementById("naam").value;
+
+    //Check for empty inputs
+    if( L == ""){ console.log("Vul de lengte in van je voorwerp!"); }
+    if( B == ""){ console.log("Vul de breedte in van je voorwerp!"); }
+    if( H == ""){ console.log("Vul de hoogte in van je voorwerp!"); }
+    if( vwpNaam == ""){ console.log("Vul een naam in voor het voorwerp!")}
+
+    //Push usermade voorwerp in objects
+    if( L != "" && B != "" && H != "" && vwpNaam != ""){ objects.push([vwpNaam, L, B, H]); }
+    
+    console.table(objects);
+});
+
 //Vars
 let container;
 let scene;
@@ -64,6 +87,13 @@ function init(){
 
     //display
     animate();
+}
+
+function makeBoxes(){
+    //Create boxes with input from the objects-array
+    for(let i=0; i < objects.length; i++){
+        console.log("CONTENT!");
+    }
 }
 
 function animate(){
