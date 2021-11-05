@@ -4,14 +4,13 @@ import * as dat from './ThreeJS/examples/jsm/libs/dat.gui.module.js';
 import { GLTFLoader } from './ThreeJS/examples/jsm/loaders/GLTFLoader.js';
 
 //Create Object Form handling
-const objects = new Array(); //All objects stored in array
-
+let objects = new Array(); //All objects stored in array
 document.getElementById("Aanmaakknop").addEventListener("click", ()=>{
 
     //Fetch value from the form
-    let L = document.getElementById("L").value;
-    let B = document.getElementById("B").value;
-    let H = document.getElementById("H").value;
+    let L = (document.getElementById("L").value)/100;
+    let B = (document.getElementById("B").value)/100;
+    let H = (document.getElementById("H").value)/100;
     let kleur = document.getElementById("kleur").value;
     let vwpNaam = document.getElementById("naam").value;
 
@@ -29,6 +28,12 @@ document.getElementById("Aanmaakknop").addEventListener("click", ()=>{
     //Push usermade voorwerp in objects
     if( L != "" && B != "" && H != "" && vwpNaam != ""){ objects.push([vwpNaam, L, B, H, rk, gk, bk]); }
     
+    //Add option to dropdown
+    var option = document.createElement("Option");
+    var optionName = document.createTextNode(vwpNaam);
+    option.appendChild(optionName);
+    document.getElementById("Voorwerpen").appendChild(option);
+
     console.table(objects);
 
     makeBoxes();
@@ -98,6 +103,11 @@ function init(){
 }
 
 //Make userboxes
+var cube0;
+var cube1;
+var cube2;
+var cube3;
+
 function makeBoxes(){
     //Loop the array to create all boxes
     for(let i = 0; i < objects.length; i++){            
@@ -108,28 +118,54 @@ function makeBoxes(){
 
         switch(i){
             case 0:
-                const cube0 = new THREE.Mesh(geometry, material);
+                cube0 = new THREE.Mesh(geometry, material);
                 scene.add(cube0);
                 break;
             case 1:
-                const cube1 = new THREE.Mesh(geometry, material);
+                cube1 = new THREE.Mesh(geometry, material);
                 scene.add(cube1);
                 break;
             case 2:
-                const cube2 = new THREE.Mesh(geometry, material);
+                cube2 = new THREE.Mesh(geometry, material);
                 scene.add(cube2);
-                break;    
+                break;   
+            case 3:
+                cube3 = new THREE.Mesh(geometry, material);
+                scene.add(cube3);
+                break;     
         }
-        
-
-        // var objectAmount = objects[i].length;
-        // for(let j = 0; j < objectAmount; j++){
-        //     console.log('[' + i + ',' + j + '] = ' + objects[i][j]);
-            
-        // }
     }
 }
 
+//Move boxes around
+var xAs = 0;
+var yAs = 0;
+var zAs = 0;
+
+//x-axis
+document.getElementById("x-as").addEventListener("click", ()=>{
+    xAs = (document.getElementById("x-as").value)/10;
+    updateCubePos();
+});
+
+//y-axis
+document.getElementById("y-as").addEventListener("click", ()=>{
+    yAs = (document.getElementById("y-as").value)/10;
+    updateCubePos();
+});
+
+//z-axis
+document.getElementById("z-as").addEventListener("click", ()=>{
+    zAs = (document.getElementById("z-as").value)/10;
+    updateCubePos();
+});
+
+//Update position
+function updateCubePos(){
+    cube0.position.set(xAs, yAs, zAs);
+}
+
+//Display 3D
 function animate(){
     requestAnimationFrame(animate);
     renderer.render(scene,camera);

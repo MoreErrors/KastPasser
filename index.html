@@ -11,7 +11,7 @@
 <body>
     <div class="container">
             <div class="justify-start mt-8  ml-8 p-8 bg-gray-800 md:w-4/12 rounded-lg float-left">
-                <h1 class="text-gray-400 font-bold text-5xl p-8">Fjällbo</h1>
+                <h1 class="text-gray-400 font-bold text-5xl p-8">Fjällbo (Ikea)</h1>
                 <p class="text-gray-400"> Een handige stellingkast als je thuis een rustieke uitstraling wilt creëren. Het metaal geeft een industrieel gevoel en het massieve hout zorgt ervoor dat ieder meubelstuk uniek is. </p>
                 <h1 class="text-gray-400 font-bold text-2xl p-8">&euro;49,95 incl. btw</h1>
                 <p class="text-gray-600 p-6"> Gebruik je linkermuisknop om te draaien, muiswiel om in- of uit te zoomen en de rechter muisknop om te schuiven<p>
@@ -28,13 +28,37 @@
                     <p class="my-auto flex text-gray-800 pt-4 gap-4">L x B x H: <input type="number" min="0" class="w-10 p-1" placeholder="L" id="L"> x <input type="number" min="0" class="w-10 p-1" placeholder="B" id="B"> x <input type="number" min="0" class="w-10 p-1" placeholder="H" id="H"></p>
                     <p class="my-auto flex text-gray-800 pt-4 gap-8">Naam: <input class="w-auto p-1" placeholder="Naam voorwerp" id="naam"><p>
                     <p class="my-auto flex text-gray-800 pt-4 gap-8">Kleur: <input type="color" placeholder="Kleur" id="kleur"><br> </p>
-                    <div id="Aanmaakknop" class="p-2 my-2 box-border h-16 w-32 bg-yellow-500 font-bold rounded-lg flex items-center justify-center cursor-pointer"><p class="m-auto">Aanmaken</p></div>
+                    <div id="Aanmaakknop" class="p-2 my-6 box-border h-16 w-32 bg-yellow-500 font-bold rounded-lg flex items-center justify-center cursor-pointer"><p class="m-auto">Aanmaken</p></div>
                 </form>
-                <h1 class="text-gray-800 ml-8 font-bold text-3xl">Al aangemaakt voorwerpen </h1>               
+                <h1 class="text-gray-800 ml-8 font-bold text-3xl">Al aangemaakt voorwerpen </h1>
+                    <p class="pl-3 text-1xl text-gray-800">
+                        Te bewerken:
+                        <select class="ml-6 mt-4 p-4 w-36 text-1xl " id="Voorwerpen">
+                            <!--Options appended in index.js-->
+                        </select>
+                    </p>                    
+                    <div class="grid grid-cols-3 text-gray-800 border-b-2 border-gray-300 pb-2">
+                        <div class="p-4">
+                            <p class="text-1xl">
+                                x-as
+                                <input type="range" class="slider" min="-40" max="40" id="x-as">
+                            </p>
+                        </div> 
+                        <div class="p-4">
+                            <p class="text-1xl">
+                                y-as
+                                <input type="range" class="slider" min="-10" max="+10" id="y-as">
+                            </p>
+                        </div> 
+                        <div class="p-4">
+                            <p class="text-1xl">
+                                z-as
+                                <input type="range" class="slider" min="-10" max="+10" id="z-as"> 
+                            </p>
+                        </div>
+                    </div>
             </div>
-
     </div>
-
     <div class="scene"></div>
     <script src="index.js" type="module"></script>
 </body>
