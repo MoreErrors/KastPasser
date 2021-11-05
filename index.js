@@ -29,10 +29,17 @@ document.getElementById("Aanmaakknop").addEventListener("click", ()=>{
     if( L != "" && B != "" && H != "" && vwpNaam != ""){ objects.push([vwpNaam, L, B, H, rk, gk, bk]); }
     
     //Add option to dropdown
-    var option = document.createElement("Option");
-    var optionName = document.createTextNode(vwpNaam);
-    option.appendChild(optionName);
+    var option = document.createElement("option");
+    option.value = (objects.length)-1;
+    option.appendChild(document.createTextNode(vwpNaam));
     document.getElementById("Voorwerpen").appendChild(option);
+
+    //Clear form
+    document.getElementById("L").value = '';
+    document.getElementById("B").value = '';
+    document.getElementById("H").value = '';
+    document.getElementById("naam").value = '';
+    document.getElementById("kleur").value = '';
 
     console.table(objects);
 
@@ -109,29 +116,39 @@ var cube2;
 var cube3;
 
 function makeBoxes(){
-    //Loop the array to create all boxes
+    //Loop through array to create all boxes
     for(let i = 0; i < objects.length; i++){            
         
+        //Set up geometry with LxBxH input from user
         var geometry = new THREE.BoxGeometry(objects[i][1], objects[i][2], objects[i][3]);
+        //Set up color input from user
         var colorbox = new THREE.Color(objects[i][4], objects[i][5], objects[i][6]);
         var material = new THREE.MeshBasicMaterial({color: colorbox});
 
         switch(i){
             case 0:
-                cube0 = new THREE.Mesh(geometry, material);
-                scene.add(cube0);
+                if(typeof cube0 == "undefined"){ //Prevent duplicates
+                    cube0 = new THREE.Mesh(geometry, material);
+                    scene.add(cube0);
+                }
                 break;
             case 1:
-                cube1 = new THREE.Mesh(geometry, material);
-                scene.add(cube1);
+                if(typeof cube1 == "undefined"){
+                    cube1 = new THREE.Mesh(geometry, material);
+                    scene.add(cube1);
+                }
                 break;
             case 2:
-                cube2 = new THREE.Mesh(geometry, material);
-                scene.add(cube2);
+                if(typeof cube2 == "undefined"){
+                    cube2 = new THREE.Mesh(geometry, material);
+                    scene.add(cube2);
+                }
                 break;   
             case 3:
-                cube3 = new THREE.Mesh(geometry, material);
-                scene.add(cube3);
+                if(typeof cube3 == "undefined"){
+                    cube3 = new THREE.Mesh(geometry, material);
+                    scene.add(cube3);
+                }
                 break;     
         }
     }
@@ -141,6 +158,8 @@ function makeBoxes(){
 var xAs = 0;
 var yAs = 0;
 var zAs = 0;
+
+var toUpdateCube;
 
 //x-axis
 document.getElementById("x-as").addEventListener("click", ()=>{
@@ -162,7 +181,29 @@ document.getElementById("z-as").addEventListener("click", ()=>{
 
 //Update position
 function updateCubePos(){
-    cube0.position.set(xAs, yAs, zAs);
+    //Find which cube to update
+    toUpdateCube = document.getElementById("Voorwerpen").value;
+    console.log(toUpdateCube);
+    console.log("Line 169");
+    switch(toUpdateCube){
+        case '0':
+            console.log("Line 171");
+            cube0.position.set(xAs, yAs, zAs);
+            break;
+        case '1':
+            console.log("Line 175");
+            cube1.position.set(xAs, yAs, zAs);
+            break;
+        case 2:
+            cube2.position.set(xAs, yAs, zAs);
+            break;
+        case 3:
+            cube3.position.set(xAs, yAs, zAs);
+            break;
+        case 4:
+            cube4.position.set(xAs, yAs, zAs);
+            break;
+    }
 }
 
 //Display 3D
