@@ -2,8 +2,10 @@ import * as THREE from './ThreeJS/build/three.module.js';
 import { OrbitControls } from './ThreeJS/examples/jsm/controls/OrbitControls.js';
 import * as dat from './ThreeJS/examples/jsm/libs/dat.gui.module.js';
 import { GLTFLoader } from './ThreeJS/examples/jsm/loaders/GLTFLoader.js';
+import threeMeshBvh from 'https://cdn.skypack.dev/three-mesh-bvh';
 
-//Create Object Form handling
+////Form handle
+//Create object
 let objects = new Array(); //All objects stored in array
 document.getElementById("Aanmaakknop").addEventListener("click", ()=>{
 
@@ -46,12 +48,14 @@ document.getElementById("Aanmaakknop").addEventListener("click", ()=>{
     makeBoxes();
 });
 
+////Product model
 //Vars
 let container;
 let scene;
 let camera;
 let renderer;
 let model;
+let modelCol;
 let controls;
 
 function init(){
@@ -94,6 +98,17 @@ function init(){
         model.rotation.set(0, -3, 0); //x, y, z
     });
 
+    //Load collission
+    loader.load('./Model/collissionboxes.gltf', function(gltf){
+        modelCol = gltf.scene;
+        let geometry = modelCol.geometry;
+        
+        modelCol.material.opacity = .5; //Collission invisible
+        scene.add(modelCol);
+        modelCol.position.set(0, -2, 0);//x, y, z
+        modelCol.rotation.set(0, -3, 0); //x, y, z
+    });
+
     //Rotation
     controls = new OrbitControls(camera, renderer.domElement); //camera pos+rot =! OrbitControls!
 
@@ -109,11 +124,16 @@ function init(){
     animate();
 }
 
-//Make userboxes
+////Make userboxes
 var cube0;
 var cube1;
 var cube2;
 var cube3;
+
+let rcCube0;
+let rcCube1;
+let rcCube2;
+let rcCube3;
 
 function makeBoxes(){
     //Loop through array to create all boxes
@@ -129,24 +149,28 @@ function makeBoxes(){
             case 0:
                 if(typeof cube0 == "undefined"){ //Prevent duplicates
                     cube0 = new THREE.Mesh(geometry, material);
+                    rcCube0 = new THREE.Vector3(); //For raycaster
                     scene.add(cube0);
                 }
                 break;
             case 1:
                 if(typeof cube1 == "undefined"){
                     cube1 = new THREE.Mesh(geometry, material);
+                    rcCube1 = new THREE.Vector3(); //For raycaster
                     scene.add(cube1);
                 }
                 break;
             case 2:
                 if(typeof cube2 == "undefined"){
                     cube2 = new THREE.Mesh(geometry, material);
+                    rcCube2 = new THREE.Vector3(); //For raycaster
                     scene.add(cube2);
                 }
                 break;   
             case 3:
                 if(typeof cube3 == "undefined"){
                     cube3 = new THREE.Mesh(geometry, material);
+                    rcCube3 = new THREE.Vector3(); //For raycaster
                     scene.add(cube3);
                 }
                 break;     
@@ -183,15 +207,15 @@ document.getElementById("z-as").addEventListener("click", ()=>{
 function updateCubePos(){
     //Find which cube to update
     toUpdateCube = document.getElementById("Voorwerpen").value;
-    console.log(toUpdateCube);
-    console.log("Line 169");
+    //Update position of cube
     switch(toUpdateCube){
         case '0':
-            console.log("Line 171");
             cube0.position.set(xAs, yAs, zAs);
+            rcCube0.x = xAs;
+            rcCube0.y = yAs;
+            rcCube0.z = zAs;
             break;
         case '1':
-            console.log("Line 175");
             cube1.position.set(xAs, yAs, zAs);
             break;
         case 2:
@@ -206,8 +230,27 @@ function updateCubePos(){
     }
 }
 
+// ////Check intersection between objects
+// //Raycaster
+// const raycaster = new THREE.Raycaster();
+
+// function interCheck(){
+//     if(typeof cube0 != "undefined"){
+//         raycaster.setFromCamera(rcCube0, camera);
+//         const intersect0 = raycaster.intersectObjects(model);
+
+//         for(let i = 0; i < intersect0.length; i++){
+//             console.log("Object intersected!");
+//         }
+//     }
+// }
+
+////Check Collission
+// Collission Coordinates
+
 //Display 3D
 function animate(){
+    //interCheck();
     requestAnimationFrame(animate);
     renderer.render(scene,camera);
 }
